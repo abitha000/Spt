@@ -1,8 +1,8 @@
-import asyncio
-from pyrogram import Client
+from pyrogram import Client, idle  # Import idle separately
 
-from .config import API_ID, API_HASH, BOT_TOKEN
+from config import API_ID, API_HASH, BOT_TOKEN
 
+# Initialize the bot
 app = Client(
     "spotify_music_bot",
     api_id=API_ID,
@@ -10,12 +10,17 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
-async def main():
-    await app.start()
-    print("Bot is now running. Press Ctrl+C to stop.")
-    await asyncio.Event().wait()
-    await app.stop()
-    print("Bot stopped.")
-
 if __name__ == "__main__":
-    asyncio.run(main())
+    print("Bot is starting...")
+
+    # Start the bot
+    app.start()
+    
+    print("Bot is now running. Press Ctrl+C to stop.")
+
+    # Use idle to keep the bot running
+    idle()
+
+    # Stop the bot when exiting
+    app.stop()
+    print("Bot stopped.")
